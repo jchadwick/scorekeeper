@@ -1,4 +1,7 @@
 {
+  "hosting": {
+    "public": "build"
+  },
   "emulators": {
     "singleProjectMode": true,
     "auth": {

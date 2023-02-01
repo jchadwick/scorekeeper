@@ -1,34 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import {
+  Box,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  Stack,
+} from "@mui/material";
+import { Suspense } from "react";
+import { Route, Routes } from "react-router-dom";
+import { Footer } from "./components/Footer";
+import { MainNav } from "./components/MainNav";
+import { GamePage } from "./pages/GamePage";
+import { GamesPage } from "./pages/GamesPage";
+import { UpdateScorePage } from "./pages/UpdateScorePage";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
-}
-
-export default App
+export const App = () => (
+  <Stack
+    direction="column"
+    sx={{ mx: "auto", width: "50vw", minHeight: "50em" }}
+  >
+    <MainNav />
+    <Card sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
+      <CardContent sx={{ flexGrow: 1, position: "relative" }}>
+        <Suspense>
+          <Routes>
+            <Route path="/" element={<GamesPage />} />;
+            <Route path="/games/:gameId" element={<GamePage />} />;
+            <Route
+              path="/games/:gameId/players/:playerId/score"
+              element={<UpdateScorePage />}
+            />
+            ;
+          </Routes>
+        </Suspense>
+      </CardContent>
+      <Box sx={{ height: "2.2em" }}>
+        <Footer />
+      </Box>
+    </Card>
+  </Stack>
+);
