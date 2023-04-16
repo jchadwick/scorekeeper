@@ -1,20 +1,12 @@
-import {
-  Avatar,
-  Fab,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemButton,
-  ListItemText,
-  Stack,
-} from "@mui/material";
-import { PageHeader } from "../components/PageHeader";
 import AddIcon from "@mui/icons-material/Add";
+import { Fab, List, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
-import { loadGame } from "../services/gamesService";
-import { Game, PlayerScore } from "../model";
 import { useParams } from "react-router-dom";
 import { Loading } from "../components/Loading";
+import { PlayerListItem } from "../components/PlayerListItem";
+import { PageHeader } from "../components/Typography";
+import { Game } from "../model";
+import { loadGame } from "../services/gamesService";
 
 export const GamePage = () => {
   const params = useParams<{ gameId: string }>();
@@ -25,7 +17,7 @@ export const GamePage = () => {
   };
 
   useEffect(() => {
-    // loadGame(params?.gameId!).then(setGame);
+    loadGame(params?.gameId!).then(setGame);
   }, [params.gameId]);
 
   if (!game) {
@@ -33,17 +25,19 @@ export const GamePage = () => {
   }
 
   return (
-    <>
-      <Stack direction="column" spacing={1}>
-        <PageHeader>{game.name}</PageHeader>
-        <List dense sx={{ width: "100%" }}>
-          {game.scores.map((score) => (
-            <GamePlayerListItem key={score.player.id} score={score} />
-          ))}
-        </List>
-        <AddPlayerButton onClick={onAddPlayer} />
-      </Stack>
-    </>
+    <Stack direction="column" spacing={1}>
+      <PageHeader>{game.name}</PageHeader>
+      <List dense sx={{ width: "100%" }}>
+        {game.scores.map((score) => (
+          <PlayerListItem
+            key={score.player.id}
+            player={score.player}
+            secondaryAction={<>{score.score}</>}
+          />
+        ))}
+      </List>
+      <AddPlayerButton onClick={onAddPlayer} />
+    </Stack>
   );
 };
 
@@ -60,19 +54,4 @@ const AddPlayerButton = ({ onClick }: { onClick: () => void }) => (
   >
     <AddIcon />
   </Fab>
-);
-
-const GamePlayerListItem = ({
-  score: { score, player },
-}: {
-  score: PlayerScore;
-}) => (
-  <ListItem key={player.id} disablePadding secondaryAction={<>{score}</>}>
-    <ListItemButton>
-      <ListItemAvatar>
-        <Avatar alt={player.name} src={player.avatarUrl} />
-      </ListItemAvatar>
-      <ListItemText primary={player.name} />
-    </ListItemButton>
-  </ListItem>
 );

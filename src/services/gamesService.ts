@@ -1,15 +1,5 @@
 import { Game } from "../model";
-
-const wait = <T>(func: () => T, timeout: number = 3000) =>
-  new Promise<T>((resolve, reject) => {
-    setTimeout(() => {
-      try {
-        resolve(func());
-      } catch (ex) {
-        reject(ex);
-      }
-    }, timeout);
-  });
+import { wait } from "../util/wait";
 
 export const loadGame = async (gameId: string): Promise<Game> => {
   return wait<Game>(() => ({

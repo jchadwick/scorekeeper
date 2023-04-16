@@ -1,5 +1,5 @@
 import { Button, Stack, TextField } from "@mui/material";
-import { PageHeader } from "../components/PageHeader";
+import { PageHeader } from "../components/Typography";
 
 export const GamesPage = () => (
   <>
