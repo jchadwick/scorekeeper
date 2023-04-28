@@ -6,5 +6,5 @@ if [ "$branch" == "wip" ]
 then
     git add .
     git commit -am "WIP"
-    git push origin wip
+    git push -f origin wip
 fi
