@@ -1,1 +1,1 @@
-export type { Game, Player } from "./api";
+export type { Game, Player } from "../lib/api";
