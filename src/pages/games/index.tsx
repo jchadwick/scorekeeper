@@ -5,9 +5,7 @@ const GamesPage = () => {
   const games = gamesQuery.data;
 
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center p-24`}
-    >
+    <main>
       <h1>Games Page</h1>
       <ul>
         {games?.map((x) => (
