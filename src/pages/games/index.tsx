@@ -1,6 +1,4 @@
-import { Game } from "@/model/client";
 import { useGames } from "@/queries/useGames";
-import { useEffect, useState } from "react";
 
 const GamesPage = () => {
   const gamesQuery = useGames();
