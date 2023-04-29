@@ -2,20 +2,17 @@ import api, * as apiTypes from "@/lib/api";
 import * as model from "@/model/client";
 import { useMutation, useQuery } from "react-query";
 
-export function useGames() {
-    const query = useQuery<model.Game[]>({
-        queryKey: ["games"],
-        queryFn: async () =>
-            (await api.get<apiTypes.Game[]>(`/games`)).data
-        ,
-    });
-
-    return { query }
-}
+export const useGames = () => useGame("none").getAll
 
 export function useGame(gameId: string) {
-    const queryKey = ["games", gameId]
-    const url = `/games/${gameId}`
+    const endpoint = "games"
+    const queryKey = [endpoint, gameId]
+    const url = `/${endpoint}/${gameId}`
+
+    const getAll = useQuery<model.Game[]>({
+        queryKey,
+        queryFn: async () => (await api.get<apiTypes.Game[]>(`/${endpoint}`)).data
+    });
 
     const get = useQuery<model.Game>({
         queryKey,
@@ -32,5 +29,5 @@ export function useGame(gameId: string) {
         mutationFn: () => api.delete(url)
     })
 
-    return { get, del }
+    return { get, getAll, del, update }
 }
