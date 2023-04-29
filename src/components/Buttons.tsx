@@ -10,11 +10,14 @@ export type ButtonProps = DetailedHTMLProps<
 > & { variant?: "primary" | "secondary" | "warning" | "error" };
 
 export const Button = ({ variant, ...props }: ButtonProps) => {
-  const color = 
-  variant === "secondary" ? "gray" :
-  variant === "warning" ? "orange" : 
-  variant === "error" ? "red" :
-  : "blue";
+  const color =
+    variant === "secondary"
+      ? "gray"
+      : variant === "warning"
+      ? "orange"
+      : variant === "error"
+      ? "red"
+      : "blue";
 
   return (
     <button
