@@ -6,7 +6,7 @@ const GamesPage = () => {
 
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24`}
+      className={`flex min-h-screen flex-col items-center p-24`}
     >
       <h1>Games Page</h1>
       <ul>
