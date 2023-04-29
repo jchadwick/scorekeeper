@@ -1,14 +1,10 @@
 import { Game } from "@/model/client";
+import { useGames } from "@/queries/useGames";
 import { useEffect, useState } from "react";
 
 const GamesPage = () => {
-  const [games, setGames] = useState<Game[]>([]);
-
-  useEffect(() => {
-    fetch("/api/games")
-      .then((res) => res.json())
-      .then((data) => setGames(data));
-  }, []);
+  const gamesQuery = useGames();
+  const games = gamesQuery.data;
 
   return (
     <main
