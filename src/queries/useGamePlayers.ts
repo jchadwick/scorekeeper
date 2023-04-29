@@ -2,38 +2,32 @@ import api, * as apiTypes from "@/lib/api";
 import * as model from "@/model/client";
 import { useMutation, useQuery } from "react-query";
 
-export const useGames = () => useGame("none").getAll;
+export const useGamePlayers = (gameId: string) =>
+  useGamePlayer(gameId, "none").getAll;
 
-export function useGame(gameId: string) {
+export function useGamePlayer(gameId: string, playerId: string) {
   const endpoint = "games";
-  const queryKey = [endpoint, gameId];
-  const url = `/${endpoint}/${gameId}`;
+  const queryKey = [endpoint, gameId, playerId];
+  const url = `/${endpoint}/${gameId}/players/${playerId}`;
 
-  const getAll = useQuery<model.Game[]>({
+  const getAll = useQuery<model.GamePlayer[]>({
     queryKey,
-    queryFn: async () => (await api.get<apiTypes.Game[]>(`/${endpoint}`)).data,
+    queryFn: async () =>
+      (await api.get<apiTypes.GamePlayer[]>(`/${endpoint}`)).data,
   });
 
-  const get = useQuery<model.Game>({
+  const get = useQuery<model.GamePlayer>({
     queryKey,
-    queryFn: async () => (await api.get<apiTypes.Game>(url)).data,
+    queryFn: async () => (await api.get<apiTypes.GamePlayer>(url)).data,
   });
 
-  const update = useMutation<model.Game, unknown, apiTypes.Game>({
+  const update = useMutation<model.GamePlayer, unknown, apiTypes.GamePlayer>({
     mutationKey: queryKey,
     mutationFn: async (update) =>
-      (await api.put<apiTypes.Game>(url, update)).data,
+      (await api.put<apiTypes.GamePlayer>(url, update)).data,
   });
 
   const del = useMutation(() => api.delete(url));
 
-
-
-  const addPlayer = useMutation(async (playerId: string) => {
-    const { data } = await api.post(`/games/${gameId}/players`, { playerId });
-    return data;
-  });
-
-  return { get, getAll, del, update, addPlayer };
+  return { get, getAll, del, update };
 }
-
