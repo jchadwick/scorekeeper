@@ -4,13 +4,15 @@ import {
   PropsWithChildren,
 } from "react";
 
+export type ButtonVariant = "primary" | "secondary" | "warning" | "error";
+
 export type ButtonProps = DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
-> & { variant?: "primary" | "secondary" | "warning" | "error" };
+> & { variant?: ButtonVariant };
 
 export const Button = ({ variant, ...props }: ButtonProps) => {
-  const color =
+  const bgColor =
     variant === "secondary"
       ? "gray"
       : variant === "warning"
@@ -21,7 +23,7 @@ export const Button = ({ variant, ...props }: ButtonProps) => {
 
   return (
     <button
-      className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded`}
+      className={`bg-${bgColor}-500 hover:bg-${bgColor}-700 text-white font-bold py-2 px-4 rounded`}
       {...props}
     />
   );
