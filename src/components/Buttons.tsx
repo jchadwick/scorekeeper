@@ -1,8 +1,4 @@
-import {
-  ButtonHTMLAttributes,
-  DetailedHTMLProps,
-  PropsWithChildren,
-} from "react";
+import { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
 
 export type ButtonVariant = "primary" | "secondary" | "warning" | "error";
 
