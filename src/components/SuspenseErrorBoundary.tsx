@@ -2,7 +2,7 @@ import { QueryErrorResetBoundary } from "@tanstack/react-query";
 import { PropsWithChildren, Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Button } from "./Buttons";
-import Loading from "./Loading";
+import { Spinner } from "flowbite-react";
 
 const SuspenseErrorBoundary = ({ children }: PropsWithChildren<{}>) => (
   <QueryErrorResetBoundary>
@@ -16,7 +16,7 @@ const SuspenseErrorBoundary = ({ children }: PropsWithChildren<{}>) => (
           </div>
         )}
       >
-        <Suspense fallback={<Loading />}>{children}</Suspense>
+        <Suspense fallback={<Spinner />}>{children}</Suspense>
       </ErrorBoundary>
     )}
   </QueryErrorResetBoundary>
