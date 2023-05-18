@@ -1,5 +1,5 @@
 import { QueryErrorResetBoundary } from "@tanstack/react-query";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Button } from "./Buttons";
 
@@ -15,7 +15,7 @@ const SuspenseErrorBoundary = ({ children }: PropsWithChildren<{}>) => (
           </div>
         )}
       >
-        {children}
+        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
       </ErrorBoundary>
     )}
   </QueryErrorResetBoundary>
