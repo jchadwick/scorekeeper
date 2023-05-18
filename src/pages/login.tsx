@@ -1,3 +1,4 @@
+import { Label, TextInput } from "flowbite-react";
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
@@ -10,8 +11,12 @@ const Login = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const { formState, control, handleSubmit, errors, register } =
-    useForm<LoginFormData>();
+  const {
+    formState: { errors },
+    control,
+    handleSubmit,
+    register,
+  } = useForm<LoginFormData>();
 
   const handleSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,8 +35,16 @@ const Login = () => {
         <input {...register("username", { required: true })} />
         {errors.username && <p style="color: red">{errors.username}</p>}
 
-        <input {...register("password", { required: true })} />
-        {errors.password && <p style="color: red">{errors.password}</p>}
+        <div className="mb-2 block">
+          <Label htmlFor="username4" color="failure" value="Your name" />
+        </div>
+        <TextInput
+          placeholder="Bonnie Green"
+          required={true}
+          color={errors.password?.message ? "failure" : ""}
+          helperText={errors.password?.message}
+          {...register("password", { required: "This field is required" })}
+        />
 
         <button type="submit">Login</button>
       </form>
