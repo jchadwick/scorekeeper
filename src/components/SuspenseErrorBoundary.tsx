@@ -1,7 +1,9 @@
 import { QueryErrorResetBoundary } from "@tanstack/react-query";
+import { PropsWithChildren } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { Button } from "./Buttons";
 
-const App: React.FC = () => (
+const SuspenseErrorBoundary = ({ children }: PropsWithChildren<{}>) => (
   <QueryErrorResetBoundary>
     {({ reset }) => (
       <ErrorBoundary
@@ -13,8 +15,10 @@ const App: React.FC = () => (
           </div>
         )}
       >
-        <Page />
+        {children}
       </ErrorBoundary>
     )}
   </QueryErrorResetBoundary>
 );
+
+export default SuspenseErrorBoundary;
