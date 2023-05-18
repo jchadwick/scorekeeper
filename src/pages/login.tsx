@@ -1,38 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 
-const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+interface LoginFormData {
+  username: string;
+  password: string;
+}
 
-  const handleSubmit = async (e) => {
+const Login = () => {
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const { formState, control, handleSubmit, errors, register } =
+    useForm<LoginFormData>();
+
+  const handleSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Send login request to backend API
+
+    if (!formState.isValid) {
+      return;
+    }
+
+    // TODO: Send the username and password to the backend to authenticate the user
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col items-center">
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="border rounded-lg p-2 m-2"
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="border rounded-lg p-2 m-2"
-      />
-      <button
-        type="submit"
-        className="bg-blue-500 text-white rounded-lg p-2 m-2"
-      >
-        Login
-      </button>
-    </form>
+    <div>
+      <h1>Login</h1>
+      <form onSubmit={handleSubmitHandler}>
+        <input {...register("username", { required: true })} />
+        {errors.username && <p style="color: red">{errors.username}</p>}
+
+        <input {...register("password", { required: true })} />
+        {errors.password && <p style="color: red">{errors.password}</p>}
+
+        <button type="submit">Login</button>
+      </form>
+      <p>
+        Don&amp;t have an account? <a href="/signup">Sign up</a>
+      </p>
+    </div>
   );
 };
 
-export default LoginForm;
+export default Login;
