@@ -32,26 +32,28 @@ const Login = () => {
     <div>
       <h1>Login</h1>
       <form onSubmit={handleSubmitHandler}>
-        <input {...register("username", { required: true })} />
-        {errors.username && <p style="color: red">{errors.username}</p>}
-
-        <div className="mb-2 block">
-          <Label htmlFor="username4" color="failure" value="Your name" />
-        </div>
-        <TextInput
-          placeholder="Bonnie Green"
-          required={true}
-          color={errors.password?.message ? "failure" : ""}
-          helperText={errors.password?.message}
-          {...register("password", { required: "This field is required" })}
-        />
-
         <button type="submit">Login</button>
       </form>
       <p>
         Don&amp;t have an account? <a href="/signup">Sign up</a>
       </p>
     </div>
+  );
+};
+
+const FormField = () => {
+  return (
+    <>
+      <div className="mb-2 block">
+        <Label htmlFor="password" color="failure" value="Password" />
+      </div>
+      <TextInput
+        required={true}
+        color={errors.password?.message ? "failure" : ""}
+        helperText={errors.password?.message}
+        {...register("password", { required: true })}
+      />
+    </>
   );
 };
 
